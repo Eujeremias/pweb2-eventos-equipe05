@@ -1,29 +1,29 @@
 import express from "express";
 
+import { EventosDatabase } from "./database/eventosDataBase.js";
+const db = new EventosDatabase()
 const app = express();
 const PORT = 3000;
-let idIncrement = 1
+const eventos = db.listarTodos()
+
+function verificaListaVazia(array){
+   return array.length == 0;
+}
 
 
+// let dado1 = {titulo: "Festa na ARSAL", descricao: "leve seu prato", vagas: 5, vagasDisponiveis: 3, modalidade: "Presencial", cargaHoraria: 5, ativo: true}
 
-const event = [
-    {id: idIncrement++, titutlo: "Festa na ARSAL", descricao: "leve seu prato", vagas: 5, vagasDisponiveis: 3, modalidade: "Presencial", cargaHoraria: 5, ativo: true, dataCriacao: "12/12/2222"},
-    {id: idIncrement++, titutlo: "Bebedeira na ARSAL", descricao: "Leve seu copo", vagas: 2, vagasDisponiveis: 2, modalidade: "Hibrido", cargaHoraria: 3, ativo: false, dataCriacao: "11/11/1111"},
-];
+console.log(db.listarTodos());
 
 // Lista todos os eventos
 app.get("/",(req, res)=>{
-    res.json(event)
+    verificaListaVazia(eventos) ? res.send("Lista sem conteúdo") : res.jso(eventos)
 })
-
 
 // Lista evento especifico
 app.get("/:id",(req,res)=>{
-    event.map((elemento)=>{
-        if(elemento.id == req.params.id){
-            res.json(elemento)
-        }
-    })
+    
+    res.send(verificaListaVazia())
 })
 
 app.listen(PORT,()=>{

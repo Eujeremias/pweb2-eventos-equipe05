@@ -1,4 +1,8 @@
 GET http://localhost:3000
 
 ####
-GET http://localhost:3000/2
+
+GET http://localhost:3000/teste
+
+####
+GET http://localhost:3000/1

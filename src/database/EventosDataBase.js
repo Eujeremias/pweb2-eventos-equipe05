@@ -18,7 +18,6 @@ export class EventosDatabase {
     const novoEvento = {
       id: this.proximoId++,
       titulo: dados.titulo,
-
       descricao: dados.descricao,
       vagas: dados.vagas,
       vagasDisponiveis: dados.vagas,
