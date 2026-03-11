@@ -7,7 +7,9 @@ const PORT = 3000;
 
 app.use(express.json());
 
+app.use('/eventos', EventosRoutes);
 app.use("/api",EventosRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Servidor ligado na porta ${PORT}`);
