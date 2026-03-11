@@ -1,17 +1,19 @@
 import express from "express";
-
-// Controller
 import { EventosController } from "../controllers/EventosController.js";
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'API funcionando!' });
-});
+// Rotas Inicias - Listar | Listar por Id | Criar Evento
+router.get('/', EventosController.listarEventos);
 
-router.get('/eventos', EventosController.getAllEvents);
-router.get('/eventos?vagasMin=:vagasMin', EventosController.getAllEvents);
-router.patch('/eventos/:id/cancelar', EventosController.cancelarEvento);
-router.post('/eventos/:id/inscricao', EventosController.inscricaoEvento);
+router.post('/', EventosController.criarEvento);
+
+router.get('/:id', EventosController.listarEventosPorId);
+
+
+// Última Rotas - Filtrar por Vagas | Realiza Inscrição | Cancela Evento
+router.get('/filtrar', EventosController.getAllEvents);
+router.patch('/:id/cancelar', EventosController.cancelarEvento);
+router.post('/:id/inscricao', EventosController.inscricaoEvento);
 
 export { router as EventosRoutes };
