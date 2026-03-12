@@ -92,6 +92,10 @@ class EventosController {
             if (!isNaN(vagasMin)) {
                 eventos = eventos.filter(e => e.vagasDisponiveis >= vagasMin);
             }
+            const { modalidade } = req.query;
+            if (modalidade) {
+                eventos = eventos.filter(e => e.modalidade && e.modalidade.toLowerCase() === modalidade.toLowerCase());
+            }
             res.json(eventos);
         } catch (err) {
             next(err);
