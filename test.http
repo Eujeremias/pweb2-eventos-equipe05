@@ -1,40 +1,101 @@
-### Listando todos elementos
+### Listando todos os eventos
 GET http://localhost:3000/eventos
 
-### Criar evento
+###
+
+### Criar evento presencial (usar o id retornado nos testes abaixo)
 POST http://localhost:3000/eventos
 Content-Type: application/json
 
 {
-    "titulo": "Evento Teste",
-    "descricao": "Descrição do evento",
-    "vagas": 50,
+    "titulo": "Workshop Node.js",
+    "descricao": "Aprenda Node.js do zero",
+    "vagas": 30,
     "modalidade": "presencial",
     "cargaHoraria": 8
 }
 
+###
+
+### Criar evento online (para testes de filtro por modalidade)
+POST http://localhost:3000/eventos
+Content-Type: application/json
+
+{
+    "titulo": "Curso React Online",
+    "descricao": "Desenvolvimento frontend com React",
+    "vagas": 100,
+    "modalidade": "online",
+    "cargaHoraria": 16
+}
+
+###
+
 ### Buscando evento por ID
-GET http://localhost:3000/eventos/2
+GET http://localhost:3000/eventos/1
 
-####
-GET http://localhost:3000/api/eventos
-
-####
-GET http://localhost:3000/api/eventos/1/cancelar
-####
-GET http://localhost:3000/api/eventos/1/inscricao
+###
 
 ### Atualizar evento
 PUT http://localhost:3000/eventos/1
 Content-Type: application/json
 
 {
-  "titulo": "Workshop Atualizado",
+  "titulo": "Workshop Node.js Atualizado",
   "vagas": 50
 }
 
-### Remover evento
-DELETE http://localhost:3000/eventos/1
+###
 
-### Listar ativos
+### Remover evento pelo id (substitua {id} pelo id retornado acima)
+DELETE http://localhost:3000/eventos/3
+
+###
+
+### Listar apenas eventos ativos
 GET http://localhost:3000/eventos/ativos
+
+###
+
+### Filtrar por modalidade: presencial
+GET http://localhost:3000/eventos/filtrar?modalidade=presencial
+
+###
+
+### Filtrar por modalidade: online
+GET http://localhost:3000/eventos/filtrar?modalidade=online
+
+###
+
+### Filtrar por número mínimo de vagas disponíveis (mínimo 20)
+GET http://localhost:3000/eventos/filtrar?vagasMin=20
+
+###
+
+### Filtrar por modalidade + mínimo de vagas (combinado)
+GET http://localhost:3000/eventos/filtrar?modalidade=online&vagasMin=50
+
+###
+
+### Realizar inscrição (reduz vagasDisponiveis do evento 1)
+POST http://localhost:3000/eventos/1/inscricao
+
+###
+
+### Realizar inscrição em evento inexistente (deve retornar 404)
+POST http://localhost:3000/eventos/999/inscricao
+
+###
+
+### Cancelar evento (marca ativo = false)
+PATCH http://localhost:3000/eventos/2/cancelar
+
+###
+
+### Verificar que evento cancelado não aparece em ativos
+GET http://localhost:3000/eventos/ativos
+
+###
+
+### Tentar inscrição em evento cancelado (deve retornar 400)
+POST http://localhost:3000/eventos/2/inscricao
